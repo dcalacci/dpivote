@@ -142,55 +142,50 @@
     }
   </script>
   
-  <main class="container mx-auto p-4">
+  <main class="flex-col container mx-auto p-4 justify-center">
     {#if hasDriversLicense === null}
-      <h2 class="text-xl mb-4">Do you have a PA driver's license?</h2>
-      <div>
-        <button on:click={() => handleDriversLicenseResponse(true)} class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Yes</button>
-        <button on:click={() => handleDriversLicenseResponse(false)} class="bg-blue-500 text-white px-4 py-2 rounded">No</button>
+      <h2 class="text-xl font-bold mb-4">Do you have a PA driver's license?</h2>
+      <div class="flex justify-center gap-4">
+        <button on:click={() => handleDriversLicenseResponse(true)} class="btn btn-primary mr-2">Yes</button>
+        <button on:click={() => handleDriversLicenseResponse(false)} class="btn btn-primary">No</button>
       </div>
     {:else if hasDriversLicense}
       <p class="mb-4">Great! You can proceed directly to the PA voter registration application.</p>
-      <button on:click={goToPARegistration} class="bg-green-500 text-white px-4 py-2 rounded">Go to PA Registration</button>
+      <button on:click={goToPARegistration} class="btn btn-success">Go to PA Registration</button>
     {:else}
-      <p class="mb-4">PA requires a photo of your signature with strict requirements. Please take a photo here first and save it to your device before proceeding to the registration site.</p>
+      <p class="mb-4">
+        PA requires a photo of your signature. Take a photo here first and save it to your device before heading to the registration site.</p>
       {#if !isCameraActive}
-        <button on:click={openCamera} class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Open Camera</button>
+        <button on:click={openCamera} class="btn btn-primary mb-4">Open Camera</button>
       {:else}
-        <video id="camera" class="w-full mb-4" autoplay playsinline>
+        <video id="camera" class="w-full mb-4 border-2 border-gray-800 rounded-lg" autoplay playsinline>
           <track kind="captions" src="" label="Captions" />
         </video>
-        <button
-          on:click={saveSignature}
-          class="bg-white text-black font-bold px-6 py-3 rounded-lg border-4 border-black shadow-md hover:bg-gray-100 transition-colors duration-300 ease-in-out font-sans"
-        >
+        <button on:click={saveSignature} class="btn btn-outline btn-primary">
           Capture Signature
         </button>
       {/if}
       {#if isPhotoTaken}
-      <div class="p-6">
-        <img src={photoUrl} alt="Signature" class="w-full mb-4 rounded-lg" />
-        <p class="text-center text-lg font-semibold text-green-600">Signature captured successfully!</p>
-        <p class="text-center text-sm text-gray-600 mt-2">
-          {canShare ? 'The image has been shared. Please save it to your device.' : 'Please save this image to your device before proceeding.'}
-        </p>
-        <div class="flex justify-center mt-4">
-          {#if !canShare}
-            <button on:click={downloadSignature} class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Save to Device</button>
-          {/if}
-          <button on:click={clearSignature} class="bg-red-500 text-white px-4 py-2 rounded">Clear and Retake</button>
+      <div class="card bg-base-100 shadow-xl p-6 mt-4">
+        <figure><img src={photoUrl} alt="Signature" class="w-full rounded-lg" /></figure>
+
+        <div class="card-body">
+          <h2 class="card-title text-success">Signature captured successfully!</h2>
+          <p class="text-sm text-base-content opacity-70">
+            {canShare ? 'The image has been shared. Please save it to your device.' : 'Please save this image to your device before proceeding.'}
+          </p>
+          <div class="card-actions justify-center mt-4">
+            <button on:click={clearSignature} class="btn btn-outline btn-error">Clear and Retake</button>
+            <button on:click={downloadSignature} class="btn btn-primary">Save to Device</button>
+            <button on:click={goToPARegistration} class="btn btn-success mt-4">Go to PA Registration</button>
+          </div>
         </div>
       </div>
       {/if}
-      <button on:click={goToPARegistration} class="bg-green-500 text-white px-4 py-2 rounded">Go to PA Registration</button>
     {/if}
-    <canvas id="canvas" style="display: none;"></canvas>
+    <canvas id="canvas" class="hidden"></canvas>
   </main>
   
   <style>
-    :global(body) {
-      background-color: #f9fafb;
-      color: #1f2937;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+    /* You can remove this style block if you're using Tailwind/daisyUI for all styling */
   </style>
