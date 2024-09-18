@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"daisyui": "^4.12.10"
+		"daisyui": "^4.12.10",
+		"piexifjs": "^1.0.6"
 	}
 }
