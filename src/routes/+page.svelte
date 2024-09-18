@@ -156,13 +156,9 @@
 
 			// Set DPI to 75
 			const dpi = 75;
-			const dpiHex = dpi.toString(16).padStart(4, '0');
-			const xResolution = '0x' + dpiHex + '000100000000';
-			const yResolution = '0x' + dpiHex + '000100000000';
-			
 			const zeroth: { [key: number]: any } = {};
-			zeroth[piexif.ImageIFD.XResolution] = xResolution;
-			zeroth[piexif.ImageIFD.YResolution] = yResolution;
+			zeroth[piexif.ImageIFD.XResolution] = [dpi, 1];
+			zeroth[piexif.ImageIFD.YResolution] = [dpi, 1];
 			zeroth[piexif.ImageIFD.ResolutionUnit] = 2; // inches
 
 			const exifObj = {"0th": zeroth, "Exif": {}, "GPS": {}, "Interop": {}, "1st": {}, "thumbnail": null};
